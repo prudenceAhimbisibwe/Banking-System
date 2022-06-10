@@ -1,6 +1,5 @@
 from time import time
 
-
 class Vehicle:
     color="white"
     def __init__(self,name,max_speed,mileage):
