@@ -57,7 +57,7 @@ class Account:
      def borrow(self,amount):
         dep_sum=0
         for d in self.deposits:
-            deposit_sum+=d["amount"]
+            dep_sum+=d["amount"]
         if amount<=0:
             return "invalid amount"
         if len(self.deposits)<10:
@@ -68,11 +68,11 @@ class Account:
             return f"You have Ksh {self.balance} in your balance so can't borrow when you have money"
         if amount> dep_sum/3:
             return f"You are not qualified to borrow this amount. You can borrow atmost {dep_sum/3}"
-        if self.loan!=0:
-            return f"YOu have an outstanding loan of {self.loan}, for you to borrow first clear "
+        if self.loan_balance!=0:
+            return f"YOu have an outstanding loan of {self.loan_balance}, for you to borrow first clear "
         else:
             interest=(3/100)*amount
-            self.loan+=amount+interest
+            self.loan_balance+=amount+interest
             return f"You have borrowed {amount} and your loan balance to be paid is equal to {self.loan}"
      def loan_repayment(self,amount):
         if amount<=0:
