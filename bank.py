@@ -20,30 +20,31 @@ class Account:
             return f"The amount must be geater than zero"
         else:
             self.balance+=amount
+            self.deposits.append(amount)
             dep_detail={"date":date.strftime('%d/%m/%y'),"amount":amount,"narration":f"You have deposited {amount} on {date} "}
             self.deposits.append(dep_detail)
-            return f"Hello,{self.account_name}{self.deposits}"
+            return f"Hello,{self.account_name} you have deposited Ksh {amount} and your current balance is {self.balance}"
 
      def withdraw(self,amount):
         date=datetime.now()
         total=amount+self.withdraw_charge
         if amount<=0:
             return f"withdraw should be greater than zero"
-        elif amount>self.balance:
+        elif amount>=self.balance:
             return f"your balance is {self.balance},you can't withdraw Ksh {amount}"
         else:
             self.balance-=total
             self.withdrawals.append(amount)
             withdraws_detail={"date":date.strftime('%d/%m/%y'),"amount":amount,"narration":f"You have withdrawn Ksh {amount} on {date} "}
             self.withdrawals.append(withdraws_detail)
-            return f"Hello,{self.account_name}{self.withdrawals}"
+            return f"Hello,{self.account_name} you have withdrawn Ksh {amount} and your current balance is {self.balance}"
 
      def deposits_statement(self):
-        for y in self.deposit:
+        for y in self.deposits:
             print (y)
 
      def withdrawals_statement(self):
-        for x in self.withdraw:
+        for x in self.withdrawals:
             print (x)
 
      def current_balance(self):
@@ -73,7 +74,7 @@ class Account:
         else:
             interest=(3/100)*amount
             self.loan_balance+=amount+interest
-            return f"You have borrowed {amount} and your loan balance to be paid is equal to {self.loan}"
+            return f"You have borrowed {amount} and your loan balance to be paid is equal to {self.loan_balance}"
      def loan_repayment(self,amount):
         if amount<=0:
             return "invalid amount"
@@ -83,7 +84,7 @@ class Account:
             return f"Your loan balance is {self.loan_balance} { self.deposit(request)}"
         else:
             self.loan_balance=amount
-            return f"You have paid a loan of Ksh {amount} and your current loan balance is {self.loan_balance} "
+            return f"You have paid a loan of Ksh {amount} and your current loan balance is {self.balance} "
      def transfer(self,amount,new_account):
         if amount<=0:
             return "invalid amount"
@@ -92,9 +93,10 @@ class Account:
         if isinstance(new_account,Account):
             self.balance-=amount
             new_account.balance+=amount
-            return f"You have transfered Ksh {amount}to {new_account} account with the name of {new_account.account_name}. Your new balance is {self.balance}"
+            return f"You have transfered Ksh {amount} to account with the name of {new_account.account_name}. Your new balance is {self.balance}"
 
 
+        
         
 
 
