@@ -63,17 +63,18 @@ class Account:
             return "invalid amount"
         if len(self.deposits)<10:
             return f"You can't borrow money because of few deposits made, make {10-len(self.deposits)} more deposits to qualify"
-        if amount<100:
+        elif amount<100:
             return "You can only borrow atleast 100"
-        if self.balance!=0:
+        elif self.balance!=0:
             return f"You have Ksh {self.balance} in your balance so can't borrow when you have money"
-        if amount> dep_sum/3:
+        elif amount> dep_sum//3:
             return f"You are not qualified to borrow this amount. You can borrow atmost {dep_sum/3}"
         if self.loan_balance!=0:
-            return f"YOu have an outstanding loan of {self.loan_balance}, for you to borrow first clear "
+            return f"You have an outstanding loan of {self.loan_balance}, for you to borrow first clear "
         else:
             interest=(3/100)*amount
             self.loan_balance+=amount+interest
+            self.balance+=amount
             return f"You have borrowed {amount} and your loan balance to be paid is equal to {self.loan_balance}"
      def loan_repayment(self,amount):
         if amount<=0:
@@ -86,14 +87,13 @@ class Account:
             self.loan_balance=amount
             return f"You have paid a loan of Ksh {amount} and your current loan balance is {self.balance} "
      def transfer(self,amount,new_account):
-        if amount<=0:
-            return "invalid amount"
-        if amount>=self.balance:
-            return "insufficient amount"
-        if isinstance(new_account,Account):
+        if amount>self.balance:
             self.balance-=amount
-            new_account.balance+=amount
+            new_account.deposit(amount)
             return f"You have transfered Ksh {amount} to account with the name of {new_account.account_name}. Your new balance is {self.balance}"
+        else:
+            self.balance<amount
+            return f"You have insufficient balance to make the transaction"
 
 
         
